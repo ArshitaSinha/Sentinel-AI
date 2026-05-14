@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-dotenv
+requests
+langchain==0.3.13
+langchain-core==0.3.28
+langchain-google-genai==2.0.8
+langchain-community==0.3.13
+pydantic>=2.0.0
+anthropic
+jira
+openpyxl
+aiohttp

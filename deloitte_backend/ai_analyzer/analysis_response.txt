@@ -1,0 +1,1 @@
+This FastAPI backend provides AI-driven test case generation and management. It features a service-oriented architecture, with `main.py` orchestrating modules for authentication, database persistence (SQLAlchemy/SQLite),

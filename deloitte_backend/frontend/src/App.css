@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --red: #ef4444;
+  --red-soft: #f87171;
+  --red-dark: #7f1d1d;
+
+  --bg-main: #000000;
+  --bg-card: #050505;
+  --bg-soft: #0a0a0a;
+
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --border: #1f2937;
+
+  --success-bg: #052e16;
+  --success-text: #6ee7b7;
+  --error-bg: #450a0a;
+  --error-text: #fca5a5;
+
+  --radius: 14px;
+  --shadow-lg: 0 20px 45px rgba(0,0,0,0.8);
+  --red-glow: 0 0 20px rgba(239,68,68,0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(180deg, #000000, #000000);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+.main-header {
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 12px rgba(239,68,68,0.4);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 24px 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-main);
+}
+
+.nav-item.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+/* ===== CONTENT ===== */
+.content-wrapper {
+  max-width: 1050px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: linear-gradient(180deg, #050505, #020202);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.input-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ===== INPUT ===== */
+.modern-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #020202;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.modern-input::placeholder {
+  color: #6b7280;
+}
+
+.modern-input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.25);
+}
+
+/* ===== BUTTONS ===== */
+.action-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--red-glow);
+}
+
+.btn-secondary {
+  background: #020202;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  border-color: var(--red);
+}
+
+/* ===== ALERTS ===== */
+.alert {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.alert-error {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+/* ===== RESULTS ===== */
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.badge {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.summary-text {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+}
+
+/* ===== TAGS ===== */
+.tag {
+  background: #020202;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #fca5a5;
+}
+
+/* ===== FLOW ===== */
+.flow-list li {
+  background: #020202;
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+/* ===== TABLE ===== */
+.modern-table th {
+  background: #020202;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.modern-table td {
+  border-bottom: 1px solid var(--border);
+}
+
+.fw-bold {
+  color: #fca5a5;
+}
+
+/* ===== CODE ===== */
+.pre-wrap {
+  background: #020202;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: monospace;
+}
+
+/* ===== ANIMATION ===== */
+.fade-in {
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

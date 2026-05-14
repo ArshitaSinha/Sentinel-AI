@@ -1,0 +1,42 @@
+```json
+{
+    "test_cases": [
+        {
+            "test_case_name": "TestGitHubRepoNotFoundMock",
+            "priority": "High",
+            "complexity": "Medium",
+            "description": "Verifies that the GitHub loader gracefully handles a 404 Not Found response from the GitHub API when attempting to fetch repository metadata.",
+            "steps": "1. Mock `requests.get` to return a 404 status code and raise `HTTPError`. 2. Call `get_github_project_files` with a dummy URL. 3. Assert that the function returns `None` for files and an error message indicating '404 Not Found'.",
+            "code": "import pytest\nfrom unittest.mock import patch, MagicMock\nimport requests\nfrom services.github_loader import get_github_project_files\n\ndef test_github_repo_not_found_mock():\n    print('[STEP] Setting up mock for requests.get to simulate 404.')\n    mock_response = MagicMock()\n    mock_response.status_code = 404\n    mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError('404 Not Found')\n    \n    with patch('services.github_loader.requests.get', return_value=mock_response):\n        print('[STEP] Calling get_github_project_files with a dummy URL.')\n        files_map, count, err_count, err_msg = get_github_project_files('https://github.com/nonexistent/repo')\n        \n        print('[STEP] Asserting the expected error message.')\n        assert files_map is None\n        assert count == 0\n        assert err_count == 0\n        assert '404 Not Found' in err_msg\n        print('[STEP] Verification complete: GitHub API 404 handled.')"
+        },
+        {
+            "test_case_name": "TestRegisterUserDbOperationsMock",
+            "priority": "High",
+            "complexity": "Medium",
+            "description": "Ensures that the user registration process correctly interacts with the database by verifying `db.add` and `db.commit` calls.",
+            "steps": "1. Mock the database session and the `User` model. 2. Patch `services.auth.get_db` to return the mocked session. 3. Call the `register` function from `main.py` with dummy user data. 4. Assert that `db.add` and `db.commit` were called exactly once, and `User` was instantiated with correct data.",
+            "code": "import pytest\nfrom unittest.mock import patch, MagicMock\nfrom main import register, UserCreate\nfrom services.auth import get_password_hash\n\ndef test_register_user_db_mock():\n    print('[STEP] Setting up mocks for database session.')\n    mock_db_session = MagicMock()\n    \n    with patch('services.db_models.User') as MockUser, \\\n         patch('services.auth.get_db', return_value=mock_db_session):\n        \n        print('[STEP] Creating a dummy UserCreate object.')\n        user_data = UserCreate(email='test@example.com', password='password123')\n        \n        print('[STEP] Calling the register function.')\n        register(user_data, db=mock_db_session)\n        \n        print('[STEP] Asserting db.add and db.commit were called.')\n        mock_db_session.add.assert_called_once()\n        mock_db_session.commit.assert_called_once()\n        \n        MockUser.assert_called_once_with(\n            email='test@example.com', \n            hashed_password=get_password_hash('password123')\n        )\n        print('[STEP] Verification complete: User registration database operations confirmed.')"
+        },
+        {
+            "test_case_name": "TestFileProcessorEmptyZipHandlingMock",
+            "priority": "Medium",
+            "complexity": "Low",
+            "description": "Confirms that the `FileProcessor` correctly handles a ZIP file that contains no relevant code files, returning an empty code map.",
+            "steps": "1. Mock `zipfile.ZipFile` to return an empty list from `infolist()`. 2. Instantiate `FileProcessor`. 3. Call `process_local_path` with a dummy zip path. 4. Assert that the returned `code_map` is empty and the zip file context manager was correctly used.",
+            "code": "import pytest\nfrom unittest.mock import patch, MagicMock\nimport zipfile\nfrom services.file_processor import FileProcessor\n\ndef test_file_processor_empty_zip_mock():\n    print('[STEP] Setting up mock for zipfile.ZipFile to return no files.')\n    mock_zip_file_instance = MagicMock()\n    mock_zip_file_instance.infolist.return_value = []\n    mock_zip_file_instance.__enter__.return_value = mock_zip_file_instance\n\n    with patch('zipfile.ZipFile', return_value=mock_zip_file_instance) as MockZipFile:\n        processor = FileProcessor()\n        \n        print('[STEP] Calling process_local_path with a dummy zip path.')\n        code_map = processor.process_local_path('dummy.zip')\n        \n        print('[STEP] Asserting that the code_map is empty.')\n        assert code_map == {}\n        MockZipFile.assert_called_once_with('dummy.zip', 'r')\n        mock_zip_file_instance.infolist.assert_called_once()\n        print('[STEP] Verification complete: Empty zip file processing handled.')"
+        },
+        {
+            "test_case_name": "TestDatetimeUtcnowConsistencyMock",
+            "priority": "Medium",
+            "complexity": "Low",
+            "description": "Validates that `datetime.utcnow` can be mocked to provide consistent timestamps for testing purposes, specifically for `User` model creation.",
+            "steps": "1. Patch `datetime.utcnow` to control its return value to a fixed time. 2. Instantiate a `User` object from `services.db_models`. 3. Assert that the `created_at` attribute of the `User` object matches the mocked fixed time.",
+            "code": "import pytest\nfrom unittest.mock import patch\nfrom datetime import datetime\nfrom services.db_models import User\n\ndef test_datetime_utcnow_consistency_mock():\n    print('[STEP] Defining a fixed datetime for mocking.')\n    fixed_time = datetime(2023, 1, 1, 10, 30, 0)\n\n    with patch('datetime.utcnow', return_value=fixed_time):\n        print('[STEP] Instantiating a User model.')\n        user = User(email='time_test@example.com', hashed_password='hashed_password')\n        \n        print('[STEP] Asserting the created_at timestamp matches the mocked value.')\n        assert user.created_at == fixed_time\n        print('[STEP] Verification complete: datetime.utcnow successfully mocked.')"
+        },
+        {
+            "test_case_name": "TestJiraExporterConnectionFailureMock",
+            "priority": "High",
+            "complexity": "Complex",
+            "description": "Tests the `JiraExporter`'s robustness by simulating a failure during its connection initialization to the Jira server.",
+            "steps": "1. Mock the `jira.JIRA` constructor to raise an exception upon instantiation. 2. Create an instance of `JiraExporter` with dummy credentials. 3. Assert that the internal `jira` client attribute remains `None`. 4. Call `verify_connection` and confirm it reports a 'Jira not initialized' error.",
+            "code": "import pytest\nfrom unittest.mock import patch, MagicMock\nfrom services.jira_exporter import JiraExporter\nfrom jira import JIRA\n\ndef test_jira_exporter_connection_failure_mock():\n    print('[STEP] Setting up mock for jira.JIRA constructor to raise an exception.')\n    with patch('services.jira_exporter.JIRA') as mock_jira_constructor:\n        mock_jira_constructor.side_effect = Exception('Jira connection refused')\n        \n        print('[STEP] Instantiating JiraExporter with dummy credentials.')\n        exporter = JiraExporter(\n            url='http://dummy-jira.com', \n            email='test@example.com', \n            token='dummy_token', \n            project_key='TEST'\n        )\n        

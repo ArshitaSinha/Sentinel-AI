@@ -1,0 +1,12 @@
+```json
+[
+  {
+    "filename": "test_sample.py",
+    "content": "import pytest\nfrom sample import add\n\ndef test_add_two_positive_numbers():\n    assert add(2, 3) == 5\n\ndef test_add_positive_and_negative_number():\n    assert add(5, -2) == 3\n"
+  },
+  {
+    "filename": "test_sample.py",
+    "content": "import pytest\nfrom sample import is_even\n\ndef test_is_even_with_even_number():\n    assert is_even(4) is True\n\ndef test_is_even_with_odd_number():\n    assert is_even(7) is False\n\ndef test_is_even_with_zero():\n    assert is_even(0) is True\n"
+  }
+]
+```

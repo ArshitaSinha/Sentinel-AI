@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+google-genai
+python-dotenv
+pytest
+playwright
+pytest-playwright
+pydantic
+aiofiles

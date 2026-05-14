@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- GLOBAL ENTERPRISE THEME --- */
+body {
+  background-color: #f8fafc; /* Matches slate-50 */
+  color: #0f172a;          /* Matches slate-900 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- TERMINAL WINDOW SCROLLBAR (The Black Log Box) --- */
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-scroll::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Dark background to match terminal */
+  border-radius: 0 0 8px 0;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb {
+  background: #475569; /* Slate-600 */
+  border-radius: 99px;
+  border: 1px solid #1e1e1e;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #64748b; /* Slate-500 */
+}
+
+/* --- MAIN PAGE SCROLLBAR (The White Page) --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9; /* Slate-100 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* Slate-300 */
+  border-radius: 5px;
+  border: 2px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* Slate-400 */
+}
